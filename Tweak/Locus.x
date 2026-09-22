@@ -204,27 +204,24 @@ static void setupFloatingButtonLifecycleObservers(void) {
 
 %ctor {
 	@autoreleasepool {
-        NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
-        if (!bundleIdentifier) return;
+		NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+		if (!bundleIdentifier) return;
 
-        NSString *plistPath = @"/var/mobile/Library/Preferences/com.waruhachi.locus.plist";
-        NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:plistPath];
-        
-        BOOL enabled = [settings[@"enabled"] boolValue];
-        if (!enabled) return;
+		NSString *plistPath = @"/var/mobile/Library/Preferences/com.waruhachi.locus.plist";
+		NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:plistPath];
 
-        NSDictionary *enabledApps = settings[@"apps"];
-        
-        if ([enabledApps[bundleIdentifier] boolValue]) {
-            %init();
+		BOOL enabled = [settings[@"enabled"] boolValue];
+		if (!enabled) return;
+
+		NSDictionary *enabledApps = settings[@"apps"];
+		if ([enabledApps[bundleIdentifier] boolValue]) {
+			%init();
 			setupFloatingButtonLifecycleObservers();
 
 			[[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidFinishLaunchingNotification
-                                                             object:nil
-                                                              queue:[NSOperationQueue mainQueue]
-                                                         usingBlock:^(NSNotification *note) 
-			{
-
+																		 object:nil
+																		 queue:[NSOperationQueue mainQueue]
+																 usingBlock:^(NSNotification *note) {
 				// Show immediately and with delayed retries so we survive varying app startup flows.
 				showFloatingButtonNow();
 				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -233,8 +230,7 @@ static void setupFloatingButtonLifecycleObservers(void) {
 				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 					showFloatingButtonNow();
 				});
-			}
-        }
-    }
-
+			}];
+		}
+	}
 }
