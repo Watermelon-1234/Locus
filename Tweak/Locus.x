@@ -204,34 +204,37 @@ static void setupFloatingButtonLifecycleObservers(void) {
 
 %ctor {
 	@autoreleasepool {
-        // 1. 取得當前執行的 App Bundle ID
         NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
         if (!bundleIdentifier) return;
 
-        // 2. 讀取偏好設定檔 (支援 Rootless 路徑)
         NSString *plistPath = @"/var/mobile/Library/Preferences/com.waruhachi.locus.plist";
         NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:plistPath];
         
-        // 3. 檢查總開關 (enabled)
         BOOL enabled = [settings[@"enabled"] boolValue];
         if (!enabled) return;
 
-        // 4. 取得使用者勾選的 App 清單 (例如字典格式或陣列格式)
         NSDictionary *enabledApps = settings[@"apps"];
         
-        // 如果當前 App 被勾選開啟，才初始化 Hook
         if ([enabledApps[bundleIdentifier] boolValue]) {
             %init(LocusHooks);
+			setupFloatingButtonLifecycleObservers();
+
+			[[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidFinishLaunchingNotification
+                                                             object:nil
+                                                              queue:[NSOperationQueue mainQueue]
+                                                         usingBlock:^(NSNotification *note) 
+			{
+
+				// Show immediately and with delayed retries so we survive varying app startup flows.
+				showFloatingButtonNow();
+				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+					showFloatingButtonNow();
+				});
+				dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+					showFloatingButtonNow();
+				});
+			}
         }
     }
-	setupFloatingButtonLifecycleObservers();
 
-	// Show immediately and with delayed retries so we survive varying app startup flows.
-	showFloatingButtonNow();
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		showFloatingButtonNow();
-	});
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-		showFloatingButtonNow();
-	});
 }
