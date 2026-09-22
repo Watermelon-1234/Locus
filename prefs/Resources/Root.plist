@@ -4,43 +4,48 @@
 <dict>
     <key>items</key>
     <array>
-        <key>cell</key>
-        <string>PSGroupCell</string>
-        <key>label</key>
-        <string>Global Switch</string>
-
-        <key>cell</key>
-        <string>PSSwitchCell</string>
-        <key>default</key>
-        <true/>
-        <key>defaults</key>
-        <string>com.waruhachi.locus</string>
-        <key>key</key>
-        <string>enabled</string>
-        <key>label</key>
-        <string>Enable Locus</string>
-
-        <key>cell</key>
-        <string>PSGroupCell</string>
-        <key>label</key>
-        <string>Applications</string>
-
-        <key>cell</key>
-        <string>PSLinkCell</string>
-        <key>bundle</key>
-        <string>AltList</string>
-        <key>isController</key>
-        <true/>
-        <key>label</key>
-        <string>Select Applications</string>
-        <key>ALNavigationTitle</key>
-        <string>Select Applications</string>
-        <key>ALSettingsPath</key>
-        <string>/var/mobile/Library/Preferences/com.waruhachi.locus.plist</string>
-        <key>ALSettingsKeyPrefix</key>
-        <string>apps-</string>
-        <key>ALChangeNotification</key>
-        <string>com.waruhachi.locus/settingschanged</string>
-    </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>label</key>
+            <string>Global Switch</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSSwitchCell</string>
+            <key>default</key>
+            <true/>
+            <key>defaults</key>
+            <string>com.waruhachi.locus</string>
+            <key>key</key>
+            <string>enabled</string>
+            <key>label</key>
+            <string>Enable Locus</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>label</key>
+            <string>Applications</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSLinkCell</string>
+            <key>bundle</key>
+            <string>AltList</string>
+            <key>isController</key>
+            <true/>
+            <key>label</key>
+            <string>Select Applications</string>
+            <key>ALNavigationTitle</key>
+            <string>Select Applications</string>
+            <key>ALSettingsPath</key>
+            <string>/var/mobile/Library/Preferences/com.waruhachi.locus.plist</string>
+            <key>ALSettingsKeyPrefix</key>
+            <string>apps-</string>
+            <key>ALChangeNotification</key>
+            <string>com.waruhachi.locus/settingschanged</string>
+        </dict>
+    </array>
 </dict>
 </plist>
