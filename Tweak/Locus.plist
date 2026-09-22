@@ -1,1 +1,1 @@
-{ Filter = { Bundles = ( "com.life360.safetymap", "com.apple.findmy" ); }; }
+{ Filter = { Bundles = ( "com.apple.UIKit" ); }; }

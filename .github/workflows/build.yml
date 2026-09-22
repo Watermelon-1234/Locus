@@ -6,6 +6,8 @@ permissions:
 on:
     release:
         types: [published]
+    push:
+        branch: [main]
 
 jobs:
     build:
@@ -47,7 +49,11 @@ jobs:
         runs-on: macos-latest
         steps:
             - uses: actions/checkout@v4
-
+            - name: Create Tag
+              id: create_tag
+              run: |
+                TAG_NAME="v1.0.$(date +'%Y%m%d%H%M%S')"
+                echo "tag_name=${TAG_NAME}" >> $GITHUB_OUTPUT
             - name: Download all DEBs
               uses: actions/download-artifact@v4
               with:
@@ -96,7 +102,7 @@ jobs:
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                tag_name: ${{ github.event.release.tag_name }}
+                tag_name: ${{ steps.create_tag.outputs.tag_name }}
                 name: ${{ github.event.repository.name }}
                 body_path: release_body.md
                 files: packages/*.deb

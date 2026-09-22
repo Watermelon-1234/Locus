@@ -6,4 +6,4 @@ Description: Per-app location spoofing tweak with floating map UI.
 Maintainer: waruhachi
 Author: waruhachi
 Section: Tweaks
-Depends: mobilesubstrate
+Depends: mobilesubstrate, preferenceloader, com.opa334.altlist

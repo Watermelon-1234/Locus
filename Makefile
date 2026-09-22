@@ -4,6 +4,10 @@ export TARGET = iphone:16.5:16.0
 INSTALL_TARGET_PROCESSES = SpringBoard
 
 SUBPROJECTS += Tweak
+# add pref submodule
+SUBPROJECTS += prefs
+
 
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/aggregate.mk
+
