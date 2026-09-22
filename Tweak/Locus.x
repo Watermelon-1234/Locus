@@ -216,7 +216,7 @@ static void setupFloatingButtonLifecycleObservers(void) {
         NSDictionary *enabledApps = settings[@"apps"];
         
         if ([enabledApps[bundleIdentifier] boolValue]) {
-            %init(LocusHooks);
+            %init();
 			setupFloatingButtonLifecycleObservers();
 
 			[[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidFinishLaunchingNotification
